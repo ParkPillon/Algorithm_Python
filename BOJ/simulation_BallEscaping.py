@@ -1,6 +1,5 @@
-# 백준 13460 구슬 탈출 2
-# https://www.acmicpc.net/problem/13460
-# '.' 빈칸 '#' 장애물/벽 'O' 구멍 'R' 빨간 구슬 'B' 파란 구슬
+# 백준 13460 구슬 탈출
+# https://www.acmicpc.net/problem/13459
 
 import sys
 from collections import deque
