@@ -1,5 +1,6 @@
-# 백준 13459 구슬 탈출
-# https://www.acmicpc.net/problem/13459
+# 백준 15644 구슬 탈출 3
+# https://www.acmicpc.net/problem/15644
+# '.' 빈칸 '#' 장애물/벽 'O' 구멍 'R' 빨간 구슬 'B' 파란 구슬
 
 import sys
 from collections import deque
@@ -32,11 +33,12 @@ def move(direction, x, y):
     return x, y, count
 
 
-answer = int(1e9)
+dirChr = ["R", "U", "L", "D"]
+findAns = False
 queue = deque()
-queue.append((rx, ry, bx, by, 1))
-while queue:
-    rx, ry, bx, by, depth = queue.popleft()
+queue.append((rx, ry, bx, by, 1, ""))
+while queue and not findAns:
+    rx, ry, bx, by, depth, memo = queue.popleft()
     if depth > 10:
         break
     for direction in range(4):
@@ -46,7 +48,9 @@ while queue:
         if board[next_bx][next_by] == "O":  # 파란공이 구멍에 떨어지면 실패
             continue
         if board[next_rx][next_ry] == "O":  # 빨간공이 구멍
-            answer = min(answer, depth)
+            print(depth)
+            print(memo + dirChr[direction])
+            findAns = True
             break
 
         if next_rx == next_bx and next_ry == next_by:  # 두공이 같은위치
@@ -58,7 +62,15 @@ while queue:
                 next_by -= dy[direction]
         if not visited[next_rx][next_ry][next_bx][next_by]:
             visited[next_rx][next_ry][next_bx][next_by] = True
-            queue.append((next_rx, next_ry, next_bx, next_by, depth + 1))
-
-
-print(answer if answer < int(1e9) else -1)
+            queue.append(
+                (
+                    next_rx,
+                    next_ry,
+                    next_bx,
+                    next_by,
+                    depth + 1,
+                    memo + dirChr[direction],
+                )
+            )
+if not findAns:
+    print(-1)
