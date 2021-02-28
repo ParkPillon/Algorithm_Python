@@ -1,17 +1,18 @@
-# 백준 11375 열혈강호
-# https://www.acmicpc.net/problem/11375
-# dfs 이용
+# 백준 11376 열혈강호2
+# https://www.acmicpc.net/problem/11376
+# dfs
 
 import sys
 
 input = sys.stdin.readline
 
 N, M = map(int, input().split())
-graph = [[] for _ in range(N + 1)]  # i번 직원이 할 수 있는 일
+graph = [[] for _ in range(2 * N + 1)]  # i번 직원이 할 수 있는 일. 2*i-1, 2*i번은 같은 사람
 for i in range(1, N + 1):
     n, *works = map(int, input().split())
     for w in works:
-        graph[i].append(w)
+        graph[2 * i - 1].append(w)
+        graph[2 * i].append(w)
 assigned_man = [0] * (M + 1)  # i번 일에 배정된 사람
 
 
@@ -26,8 +27,8 @@ def dfs(man):
     return False
 
 
-for i in range(1, N + 1):
-    visited = [0] * (N + 1)
+for i in range(1, 2 * N + 1):
+    visited = [0] * (2 * N + 1)
     dfs(i)
 
 answer = 0
